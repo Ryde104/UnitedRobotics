@@ -1,22 +1,19 @@
 import { Text, View } from "../components/Themed";
+import { Picker } from '@react-native-picker/picker';
 
 const Step = (props: any) => {
-  // return <div>
-
-  // <p>Title: {props.Title}</p>
-
-  // {/* <p>value: {props.Default}</p> */}
-
-  // {/* <select value={props.Default} onChange={props.Event}>
-  //     {props.Values.map((v: any) => <option value={v}>{v}</option>)}
-  //  </select> */}
-
-  // </div>
-
   return (
     <View>
       <Text>{props.Title}</Text>
-      <Text>{props.name}</Text>
+      <Text>{props.Description}</Text>
+      <Text>Video Player</Text>
+      <Text>Options:</Text>
+      <Picker selectedValue={props.Default}
+        onValueChange={(itemValue, itemIndex) =>
+          props.Event(itemValue)
+        }>
+        {props.Values.map((v: any) => <Picker.Item key={v} label={v} value={v} />)}
+      </Picker>
     </View>
   );
 };
