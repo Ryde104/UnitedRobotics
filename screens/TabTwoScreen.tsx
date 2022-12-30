@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, Image } from "react-native";
 import Complete from "../components/Compete";
 
 import EditScreenInfo from "../components/EditScreenInfo";
@@ -16,9 +16,10 @@ export default function TabTwoScreen() {
   const [Step2Value, setStep2Value] = React.useState("OptB");
 
   const Step3Values = ["Opt1", "Opt2", "Opt3"];
-  const [Step3Value, setStep3Value] = React.useState("Opt1");
+  const [Step3Value, setStep3Value] = React.useState("Opt3");
 
   function RenderPage() {
+    if (m_nPage == -1) return setPage(m_nPage + 1), (<View></View>);
     if (m_nPage == 0)
       return (
         <Step
@@ -27,7 +28,7 @@ export default function TabTwoScreen() {
           Default={Step1Value}
           Event={setStep1Value}
           Values={Step1Values}
-          url="http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+          url="https://mmmmanager.blob.core.windows.net/step/1.MP4"
         ></Step>
       );
     else if (m_nPage == 1)
@@ -38,7 +39,7 @@ export default function TabTwoScreen() {
           Default={Step2Value}
           Event={setStep2Value}
           Values={Step2Values}
-          url="https://samplelib.com/lib/preview/mp4/sample-10s.mp4"
+          url="https://mmmmanager.blob.core.windows.net/step/2.MP4"
         ></Step>
       );
     else if (m_nPage == 2)
@@ -49,10 +50,18 @@ export default function TabTwoScreen() {
           Default={Step3Value}
           Event={setStep3Value}
           Values={Step3Values}
-          url="http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4"
+          url="https://mmmmanager.blob.core.windows.net/step/3.MP4"
         ></Step>
       );
-    else if (m_nPage == 3) return <Complete Value1={Step1Value}></Complete>;
+    else if (m_nPage == 3)
+      return (
+        <Complete
+          Value1={Step1Value}
+          Value2={Step2Value}
+          Value3={Step3Value}
+          Total={Total()}
+        ></Complete>
+      );
   }
 
   function Back() {
@@ -67,54 +76,50 @@ export default function TabTwoScreen() {
 
     switch (Step1Value) {
       case "Opt1":
-        m_nTotal += 5;
+        m_nTotal += 1;
         break;
       case "Opt2":
-        m_nTotal += 15;
+        m_nTotal += 2;
         break;
       case "Opt3":
-        m_nTotal += 25;
+        m_nTotal += 3;
         break;
     }
 
     switch (Step2Value) {
       case "OptA":
-        m_nTotal += 5;
+        m_nTotal += 10;
         break;
       case "OptB":
-        m_nTotal += 15;
+        m_nTotal += 20;
         break;
       case "OptC":
-        m_nTotal += 25;
+        m_nTotal += 30;
         break;
     }
     switch (Step3Value) {
       case "Opt1":
-        m_nTotal += 5;
+        m_nTotal += 100;
         break;
       case "Opt2":
-        m_nTotal += 15;
+        m_nTotal += 200;
         break;
       case "Opt3":
-        m_nTotal += 25;
+        m_nTotal += 300;
         break;
     }
 
-    return <Text>Total: {m_nTotal}</Text>;
+    return m_nTotal;
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Quote</Text>
-
       {RenderPage()}
-      {Total()}
-
-      <Pressable style={styles.button} onPress={Back}>
+      <Pressable style={styles.buttonLeft} onPress={Back}>
         <Text style={styles.text}>Back</Text>
       </Pressable>
 
-      <Pressable style={styles.button} onPress={Next}>
+      <Pressable style={styles.buttonRight} onPress={Next}>
         <Text style={styles.text}>Next</Text>
       </Pressable>
     </View>
@@ -125,26 +130,40 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
   },
   title: {
-    fontSize: 20,
+    fontSize: 26,
     fontWeight: "bold",
   },
   separator: {
-    marginVertical: 30,
+    marginVertical: 10,
     height: 1,
     width: "80%",
   },
-  button: {
-    width: 225,
+  buttonLeft: {
+    width: 150,
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 12,
     paddingHorizontal: 32,
     borderRadius: 4,
-    elevation: 3,
-    backgroundColor: "black",
+    backgroundColor: "#0f2550",
+    position: "absolute",
+    bottom: 10,
+    left: 10,
+  },
+  buttonRight: {
+    width: 150,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    backgroundColor: "#0f2550",
+    position: "absolute",
+    bottom: 10,
+    right: 10,
   },
   text: {
     fontSize: 16,
@@ -152,5 +171,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "white",
+  },
+  image: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 200,
+    height: 130,
+    //alignItems: "flex-start",
+    // justifyContent: "center",
   },
 });

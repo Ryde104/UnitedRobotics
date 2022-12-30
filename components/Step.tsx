@@ -9,9 +9,8 @@ const Step = (props: any) => {
   const [status, setStatus] = React.useState({});
   return (
     <View>
-      <Text>{props.Title}</Text>
-      <Text>{props.Description}</Text>
-      <Text>Video Player</Text>
+      <Text style={styles.Title}>{props.Title}</Text>
+      <Text style={styles.Desc}>{props.Description}</Text>
       <Video
         ref={VideoOne}
         style={{ width: 300, height: 169 }}
@@ -24,9 +23,9 @@ const Step = (props: any) => {
         isLooping
         onPlaybackStatusUpdate={setStatus}
       ></Video>
-
-      <Text>Options:</Text>
+      <Text style={styles.Title}>Options:</Text>
       <Picker
+        // style={styles.Picker}
         selectedValue={props.Default}
         onValueChange={(itemValue, itemIndex) => props.Event(itemValue)}
       >
@@ -43,6 +42,22 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  Title: {
+    fontSize: 30,
+    fontWeight: "bold",
+    // marginVertical: 5,
+    textAlign: "center",
+  },
+  Desc: {
+    fontSize: 15,
+    marginVertical: 5,
+    textAlign: "center",
+  },
+  Picker: {
+    backgroundColor: "#818080",
+    width: 150,
+    left: 73,
   },
   // video: {
   //   flex: 1,
